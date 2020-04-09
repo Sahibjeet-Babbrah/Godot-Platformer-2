@@ -1,0 +1,39 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_0.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_1.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_2.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_3.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_4.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_5.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_6.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Enemy Animations/Walking/sprite_7.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Walking",
+"speed": 5.0
+} ]
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Walking"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -24, -44, 20, -44, 20, 44, -24, 44 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 20, 0 )
+enabled = true
+cast_to = Vector2( 0, 60 )
+
+[node name="TurnTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]
